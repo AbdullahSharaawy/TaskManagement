@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using TaskManagementDAL.Entities;
 
 namespace TaskManagementDAL.Database
@@ -15,8 +11,8 @@ namespace TaskManagementDAL.Database
 
         }
         public TaskManagementDbContext(DbContextOptions<TaskManagementDbContext> options) : base(options) { }
-        DbSet<task> Task { get; set; }
-        DbSet<project> Project { get; set; }
+        public DbSet<task> Task { get; set; }
+        public DbSet<project> Project { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             base.OnModelCreating(modelBuilder);
