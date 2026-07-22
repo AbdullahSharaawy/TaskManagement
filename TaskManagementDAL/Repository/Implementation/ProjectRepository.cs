@@ -2,6 +2,7 @@
 
 using TaskManagementDAL.Database;
 using TaskManagementDAL.Entities;
+using TaskManagementDAL.FilterModels.Project;
 using TaskManagementDAL.Repository.Abstraction;
 
 namespace TaskManagementDAL.Repository.Implementation
@@ -13,13 +14,26 @@ namespace TaskManagementDAL.Repository.Implementation
         {
           _dbContext = dbContext;
         }
-        public async Task<project?>  AddAsync(project project)
+        public async Task<project?>  AddProjectAsync(project project)
         {
             _dbContext.Add(project);
             
             int RowAffected= await _dbContext.SaveChangesAsync();
             if (RowAffected > 0)
                 return project;
+            return null;
+        }
+
+        public async Task<task?> AddProjectTaskAsync(task task, int projectId)
+        {
+            var project = await _dbContext.Project.Where(p => p.Id == projectId).FirstOrDefaultAsync();
+            if (project == null) return null;
+
+            task.project_id = projectId;
+            _dbContext.Add(task);
+            int RowAffected = await _dbContext.SaveChangesAsync();
+            if (RowAffected > 0)
+                return task;
             return null;
         }
 
@@ -41,10 +55,22 @@ namespace TaskManagementDAL.Repository.Implementation
             
         }
 
-        public async Task<IEnumerable<project>> GetAllAsync()
+        public async Task<(IEnumerable<project>, int)> GetAllAsync(ProjectQueryParameters query)
+
         {
-            return await _dbContext.Project.ToListAsync();
-            
+            IQueryable<project> projects = _dbContext.Project
+          .AsNoTracking()
+          .OrderByDescending(p => p.created_at); 
+
+            int totalCount = await projects.CountAsync();
+
+            var items = await projects
+                .Skip((query.Page - 1) * query.Limit)
+                .Take(query.Limit)
+                .ToListAsync();
+
+            return (items, totalCount);
+
         }
 
         public async Task<project?> GetByIdAsync(int id)
