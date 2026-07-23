@@ -1,6 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using TaskManagementBLL.Services.Abstraction;
+using TaskManagementBLL.Services.Implementation;
 using TaskManagementDAL.Database;
+using TaskManagementDAL.Repository.Abstraction;
+using TaskManagementDAL.Repository.Implementation;
 
 namespace TaskManagement
 {
@@ -16,6 +21,12 @@ namespace TaskManagement
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            // register Task and Project repositories in DI container
+            builder.Services.AddScoped<ITaskRepository,TaskRepository>();
+            builder.Services.AddScoped<IProjectRepository,ProjectRepository>();
+            // register Task and Project services in DI container
+            builder.Services.AddScoped<IProjectService,ProjectService>();
+            builder.Services.AddScoped<ITaskService,TaskService>();
            // database connection
             var con = builder.Configuration.GetConnectionString("DefaultConnection");
 
