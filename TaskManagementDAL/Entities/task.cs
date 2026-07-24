@@ -16,7 +16,7 @@ namespace TaskManagementDAL.Entities
         public Priority priority { get; set; }=Priority.medium;
         public DateTime? due_date { get; set; }
         public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
+        public DateTime? updated_at { get; set; }
 
         [ForeignKey("project")]
         public int project_id { get; set; }
