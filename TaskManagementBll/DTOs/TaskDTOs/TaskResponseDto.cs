@@ -17,7 +17,7 @@ namespace TaskManagementBLL.DTOs.TaskDTOs
         public Priority priority { get; set; } = Priority.medium;
         public DateTime? due_date { get; set; }
         public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
+        public DateTime? updated_at { get; set; }
         public string project_name { get; set; } = string.Empty;
     }
 }

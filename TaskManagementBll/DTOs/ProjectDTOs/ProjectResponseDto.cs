@@ -14,7 +14,7 @@ namespace TaskManagementBLL.DTOs.ProjectDTOs
         public string name { get; set; } = string.Empty;
         public string? description { get; set; }
         public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
-        public ICollection<TaskResponseDto> tasks { get; set; }
+        public DateTime? updated_at { get; set; }
+      
     }
 }
