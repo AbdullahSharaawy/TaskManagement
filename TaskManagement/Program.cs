@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
+using System.Text.Json.Serialization;
 using TaskManagementBLL.Services.Abstraction;
 using TaskManagementBLL.Services.Implementation;
 using TaskManagementDAL.Database;
@@ -17,7 +18,11 @@ namespace TaskManagement
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                // This converts all enums to strings globally
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }); 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
