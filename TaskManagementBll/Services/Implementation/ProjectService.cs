@@ -27,6 +27,8 @@ namespace TaskManagementBLL.Services.Implementation
         {
             
             project mappedEntity = new CreateProject().MapToProject(Project);
+            mappedEntity.created_at= DateTime.Now;
+            
 
             project result = await _projectRepository.AddProjectAsync(mappedEntity);
 
@@ -52,6 +54,8 @@ namespace TaskManagementBLL.Services.Implementation
         public async Task<ServiceResponse< TaskResponseDto>> AddProjectTaskAsync(CreateTaskDto task, int projectId)
         {
             task mappedEntity = new CreateTask().MapToTask(task);
+            mappedEntity.created_at = DateTime.UtcNow;
+            mappedEntity.project_id = projectId;
             var result=await _projectRepository.AddProjectTaskAsync(mappedEntity, projectId);
             if (result == null)
             {
@@ -146,7 +150,7 @@ namespace TaskManagementBLL.Services.Implementation
         {
             project mappedEntity = new UpdateProject().MapToProject(Project);
             mappedEntity.Id = projectId;
-
+            mappedEntity.updated_at = DateTime.UtcNow;
             project result = await _projectRepository.UpdateAsync(mappedEntity);
 
             if (result == null)

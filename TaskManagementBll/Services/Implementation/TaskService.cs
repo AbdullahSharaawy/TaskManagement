@@ -78,6 +78,7 @@ namespace TaskManagementBLL.Services.Implementation
         {
             task mappedEntity = new UpdateTask().MapToTask(Task);
             mappedEntity.Id=taskId;
+            mappedEntity.updated_at=DateTime.UtcNow;
             task result = await _taskRepository.UpdateAsync(mappedEntity);
 
             if (result == null)
