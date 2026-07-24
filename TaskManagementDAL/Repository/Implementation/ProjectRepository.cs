@@ -33,7 +33,7 @@ namespace TaskManagementDAL.Repository.Implementation
             var project = await _dbContext.Project.Where(p => p.Id == projectId).FirstOrDefaultAsync();
             if (project == null) return null;
 
-            task.project_id = projectId;
+            
             _dbContext.Add(task);
             int RowAffected = await _dbContext.SaveChangesAsync();
             if (RowAffected > 0)
