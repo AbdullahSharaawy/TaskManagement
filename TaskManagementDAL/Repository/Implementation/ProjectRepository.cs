@@ -16,6 +16,10 @@ namespace TaskManagementDAL.Repository.Implementation
         }
         public async Task<project?>  AddProjectAsync(project project)
         {
+            var existingProject = await _dbContext.Project.FirstOrDefaultAsync(p => p.name == project.name);
+            if (existingProject != null) {
+                return null;
+            }
             _dbContext.Add(project);
             
             int RowAffected= await _dbContext.SaveChangesAsync();
