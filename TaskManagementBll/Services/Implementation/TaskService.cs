@@ -22,7 +22,7 @@ namespace TaskManagementBLL.Services.Implementation
         private readonly ITaskRepository _taskRepository;
         public TaskService(ITaskRepository taskRepository)
         {
-            taskRepository = taskRepository;
+            _taskRepository = taskRepository;
         }
 
        
